@@ -1,9 +1,56 @@
-div {
-  background-color: grey;
-  h1 {
-    color: aqua;
+// div {
+//   background-color: grey;
+//   h1 {
+//     color: aqua;
+//   }
+//   h2 {
+//     color: yellow;
+//   }
+// }
+
+// .main,
+// footer {
+//   h1,
+//   p {
+//     letter-spacing: 1px;
+//   }
+// }
+
+// ===== Parent Selector =====
+// &
+
+.main {
+  .container & {
+    background-color: aqua;
   }
-  h2 {
-    color: yellow;
+
+  .main-heading {
+    font-size: 2em;
+  }
+
+  &:hover {
+    background-color: red;
+  }
+}
+
+// jika class-nya sama bisa menggunakan "&"
+.main {
+  & &-heading {
+    font-size: 20px;
+  }
+
+  & &-paragraph {
+    font-size: 30px;
+  }
+}
+
+// & bisa diganti dengan #{&}
+
+.footer {
+  #{&}-heading {
+    background-color: pink;
+  }
+  #{&}-paragraph {
+    color: skyblue;
   }
 }

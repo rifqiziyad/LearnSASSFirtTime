@@ -1,0 +1,28 @@
+.container .main {
+  background-color: aqua;
+}
+
+.main .main-heading {
+  font-size: 2em;
+}
+
+.main:hover {
+  background-color: red;
+}
+
+.main .main-heading {
+  font-size: 20px;
+}
+
+.main .main-paragraph {
+  font-size: 30px;
+}
+
+.footer .footer-heading {
+  background-color: pink;
+}
+
+.footer .footer-paragraph {
+  color: skyblue;
+}
+/*# sourceMappingURL=main.css.map */
