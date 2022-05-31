@@ -19,38 +19,152 @@
 // ===== Parent Selector =====
 // &
 
-.main {
-  .container & {
-    background-color: aqua;
-  }
+// .main {
+//   .container & {
+//     background-color: aqua;
+//   }
 
-  .main-heading {
-    font-size: 2em;
-  }
+//   .main-heading {
+//     font-size: 2em;
+//   }
 
-  &:hover {
-    background-color: red;
+//   &:hover {
+//     background-color: red;
+//   }
+// }
+
+// // jika class-nya sama bisa menggunakan "&"
+// .main {
+//   & &-heading {
+//     font-size: 20px;
+//   }
+
+//   & &-paragraph {
+//     font-size: 30px;
+//   }
+// }
+
+// // & bisa diganti dengan #{&}
+
+// .footer {
+//   #{&}-heading {
+//     background-color: pink;
+//   }
+//   #{&}-paragraph {
+//     color: skyblue;
+//   }
+// }
+
+// CSS Variable =------------------------------------------------------------------------------------------------
+
+// :root {
+//   --primary-color: white;
+//   --secondary-color: #9f9;
+//   --text-color: #210432;
+// }
+
+// body {
+//   background-color: var(--secondary-color);
+// }
+
+// h1 {
+//   color: var(--text-color);
+// }
+
+// p {
+//   color: var(--primary-color);
+// }
+
+// SASS Variable
+
+// SASS akan menganggap sama jika menggunakan "-" atau "_" untuk pemisah katanya
+// SASS juga memiliki scop/lingkup
+// bisa merubah variable local menjadi global dengan menggunakan "!global" diakhir sebelum titik koma
+
+// $primary-color: rgb(212, 189, 223);
+// $secondary-color: #876;
+// $text-color: green !global;
+
+// body {
+//   $text-color: blue !global;
+//   background-color: $primary-color;
+// }
+
+// h1 {
+//   color: $text_color;
+// }
+
+// Map
+// seperti objek di javascript
+
+// $alert: (
+//   "danger": red,
+//   "success": green,
+//   "warning": orange,
+// );
+
+// section {
+//   background-color: map-get($map: $alert, $key: "warning");
+// }
+
+// h1 {
+//   color: map-get($map: $alert, $key: "success");
+// }
+
+// Mixin ----------------------------------------------------------------------------------------------
+// Kumpulan style yang dapat digunakan berulang ulang seperti function
+// @mixin untuk membuat mixin
+// @include untuk memanggil mixin
+
+@mixin inline-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    display: inline-block;
   }
 }
 
-// jika class-nya sama bisa menggunakan "&"
-.main {
-  & &-heading {
-    font-size: 20px;
-  }
-
-  & &-paragraph {
-    font-size: 30px;
+.header ul {
+  @include inline-list();
+  li {
+    background-color: black;
+    padding: 0.7em;
+    a {
+      color: white;
+    }
   }
 }
 
-// & bisa diganti dengan #{&}
-
-.footer {
-  #{&}-heading {
-    background-color: pink;
+.footer ul {
+  @include inline-list();
+  li {
+    padding: 0.4em;
+    background-color: salmon;
+    a {
+      color: white;
+      text-decoration: none;
+    }
   }
-  #{&}-paragraph {
-    color: skyblue;
+}
+
+@mixin flex-box($direction: row, $space: center) {
+  display: flex;
+  justify-content: $space;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+.main .container {
+  @include flex-box(row-reverse, space-evenly);
+  width: 600px;
+  height: 600px;
+  background-color: grey;
+  .box {
+    width: 60px;
+    height: 60px;
+    background-color: #606;
+    text-align: center;
+    line-height: 60px;
   }
 }
