@@ -1,0 +1,288 @@
+// div {
+//   background-color: grey;
+//   h1 {
+//     color: aqua;
+//   }
+//   h2 {
+//     color: yellow;
+//   }
+// }
+
+// .main,
+// footer {
+//   h1,
+//   p {
+//     letter-spacing: 1px;
+//   }
+// }
+
+// ===== Parent Selector =====
+// &
+
+// .main {
+//   .container & {
+//     background-color: aqua;
+//   }
+
+//   .main-heading {
+//     font-size: 2em;
+//   }
+
+//   &:hover {
+//     background-color: red;
+//   }
+// }
+
+// // jika class-nya sama bisa menggunakan "&"
+// .main {
+//   & &-heading {
+//     font-size: 20px;
+//   }
+
+//   & &-paragraph {
+//     font-size: 30px;
+//   }
+// }
+
+// // & bisa diganti dengan #{&}
+
+// .footer {
+//   #{&}-heading {
+//     background-color: pink;
+//   }
+//   #{&}-paragraph {
+//     color: skyblue;
+//   }
+// }
+
+// CSS Variable =------------------------------------------------------------------------------------------------
+
+// :root {
+//   --primary-color: white;
+//   --secondary-color: #9f9;
+//   --text-color: #210432;
+// }
+
+// body {
+//   background-color: var(--secondary-color);
+// }
+
+// h1 {
+//   color: var(--text-color);
+// }
+
+// p {
+//   color: var(--primary-color);
+// }
+
+// SASS Variable
+
+// SASS akan menganggap sama jika menggunakan "-" atau "_" untuk pemisah katanya
+// SASS juga memiliki scop/lingkup
+// bisa merubah variable local menjadi global dengan menggunakan "!global" diakhir sebelum titik koma
+
+// $primary-color: rgb(212, 189, 223);
+// $secondary-color: #876;
+// $text-color: green !global;
+
+// body {
+//   $text-color: blue !global;
+//   background-color: $primary-color;
+// }
+
+// h1 {
+//   color: $text_color;
+// }
+
+// Map
+// seperti objek di javascript
+
+// $alert: (
+//   "danger": red,
+//   "success": green,
+//   "warning": orange,
+// );
+
+// section {
+//   background-color: map-get($map: $alert, $key: "warning");
+// }
+
+// h1 {
+//   color: map-get($map: $alert, $key: "success");
+// }
+
+// Mixin ----------------------------------------------------------------------------------------------
+// Kumpulan style yang dapat digunakan berulang ulang seperti function
+// @mixin untuk membuat mixin
+// @include untuk memanggil mixin
+
+// @mixin inline-list {
+//   margin: 0;
+//   padding: 0;
+//   list-style: none;
+//   li {
+//     display: inline-block;
+//   }
+// }
+
+// .header ul {
+//   @include inline-list();
+//   li {
+//     background-color: black;
+//     padding: 0.7em;
+//     a {
+//       color: white;
+//     }
+//   }
+// }
+
+// .footer ul {
+//   @include inline-list();
+//   li {
+//     padding: 0.4em;
+//     background-color: salmon;
+//     a {
+//       color: white;
+//       text-decoration: none;
+//     }
+//   }
+// }
+
+// @mixin flex-box($direction: row, $space: center) {
+//   display: flex;
+//   justify-content: $space;
+//   align-items: center;
+//   flex-direction: $direction;
+// }
+
+// .main .container {
+//   @include flex-box(row-reverse, space-evenly);
+//   width: 600px;
+//   height: 600px;
+//   background-color: grey;
+//   .box {
+//     width: 60px;
+//     height: 60px;
+//     background-color: #606;
+//     text-align: center;
+//     line-height: 60px;
+//   }
+// }
+
+// Modules
+// Membuat code sass kita modular / mudah untuk dikelola
+
+// @import "modules/_mixin";
+// @import "modules/_header";
+// @import "modules/_container";
+// @import "modules/_footer";
+
+// @import "modules/_mixin", "modules/_header", "modules/_container",
+//   "modules/_footer";
+
+// @use "modules/_header";
+// @use "modules/_container";
+// @use "modules/_footer";
+
+// Flow Control ===================================================================================================
+
+// @if, @else, @else if
+// @for
+// @while
+// each
+
+@mixin profile-pic($size, $circle: false) {
+  width: $size;
+  height: $size;
+  border: 5px solid white;
+  box-shadow: 1px 1px 3px rgba($color: #000000, $alpha: 0.3);
+
+  @if $circle {
+    border-radius: 50%;
+  }
+}
+
+.square-profile {
+  @include profile-pic(200px, $circle: false);
+}
+
+.circle-profile {
+  @include profile-pic(80px, $circle: true);
+}
+
+@mixin triangle($size, $color, $directiom) {
+  width: 0;
+  padding: 0;
+  background-color: transparent;
+  border-color: transparent;
+  border-style: solid;
+  border-width: $size/2;
+
+  // if
+
+  @if $directiom == top {
+    border-bottom-color: $color;
+  } @else if $directiom == right {
+    border-left-color: $color;
+  } @else if $directiom == left {
+    border-right-color: $color;
+  } @else {
+    border-top-color: $color;
+  }
+}
+
+.top {
+  @include triangle(2em, black, top);
+}
+.right {
+  @include triangle(2em, blue, right);
+}
+.left {
+  @include triangle(2em, red, left);
+}
+.bottom {
+  @include triangle(2em, green, bottom);
+}
+
+.gradient {
+  $color: salmon;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  // for
+  // @for $i from 1 to 11 {
+  //   li:nth-child(#{$i}) {
+  //     padding: 4px;
+  //     background-color: lighten($color, $amount: $i * 2);
+  //   }
+  // }
+
+  // while
+  $i: 1;
+  @while $i < 11 {
+    li:nth-child(#{$i}) {
+      padding: 4px;
+      background-color: lighten($color: red, $amount: $i * 2);
+    }
+    $i: $i + 1;
+  }
+}
+
+$social-colors: (
+  youtube: red,
+  facebook: #3b5998,
+  twitter: #1da1f2,
+  instagram: #ffbf34,
+);
+
+.socials {
+  font-size: 2em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  @each $social, $color in $social-colors {
+    .#{$social} {
+      color: $color;
+    }
+  }
+}
